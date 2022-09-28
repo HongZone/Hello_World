@@ -42,3 +42,4 @@ public class App {
 	    System.out.println(sum);
 	}
 }
+//깃에서 커밋으로 불러오기
