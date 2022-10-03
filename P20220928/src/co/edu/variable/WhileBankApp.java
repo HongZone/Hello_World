@@ -31,7 +31,7 @@ public class WhileBankApp {
 				
 				for(int i = 0; i < banks.length; i++) {
 					if(banks[i] != null && banks[i].getAccNo().equals(accNo)) {
-					banks[i].getBalance() = banks[i].getBalance() + money;						
+					banks[i].setBalance(banks[i].getBalance() + money);			
 					}
 				}
 				
@@ -46,7 +46,7 @@ public class WhileBankApp {
 						if(banks[i].getBalance()<outmoney) {
 							System.out.println("출금할 수 없습니다");
 						}else {
-							banks[i].getBalance() = banks[i].getbalance()-outmoney;
+							banks[i].setBalance(banks[i].getBalance()-outmoney);
 						}
 					}
 				}
@@ -57,7 +57,7 @@ public class WhileBankApp {
 				String accNo = scn.nextLine();
 				for(int i=0; i< banks.length; i++) {
 					if(banks[i] != null && banks[i].getAccNo().equals(accNo)) {
-						System.out.println("잔액 :" + banks[i].getbalance());
+						System.out.println("잔액 :" + banks[i].getBalance());
 					}
 				}
 			}else if(menu ==4) {
@@ -70,9 +70,8 @@ public class WhileBankApp {
 				System.out.println("예금주>>>");
 				String owner = scn.nextLine();
 				
-				Account acc = new Account(); // 인스턴트 생성
-				acc.getAccNo() = accNo;
-				acc.getowner() = owner;
+				Account acc = new Account(accNo, owner); // 인스턴트 생성
+				
 				//계좌가 비어있는지 확인 후 없으면 넣고 있으면 다음 넘어가고
 				for(int i=0;i<banks.length;i++) {
 					if(banks[i] == null) {

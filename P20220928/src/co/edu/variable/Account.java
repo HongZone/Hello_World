@@ -1,29 +1,38 @@
 package co.edu.variable;
 
 public class Account {
-	private String accNo; //계좌번호
-	private	String owner; //예금주
-	private int balance; //예금액
+	 private String accNo; //계좌번호
+	 private String owner; //예금주
+	 private int balance; //예금액
+	
+	 public Account() {}
+	
+	public Account(String accNo, String owner) {
+		this.accNo = accNo;
+		this.owner = owner;
+		
+		
+	}
 	
 	//계좌번호
-	void setAccNo(String accNo) {
+	public void setAccNo(String accNo) {
 		this.accNo = accNo;
 	}
-	String getAccNo() {
+	public String getAccNo() {
 		return this.accNo;
 	}
 	//예금주
-	void setOwner(String owner) {
+	public void setOwner(String owner) {
 		this.owner = owner;
 	}
-	String getOwner() {
+	public String getOwner() {
 		return this.owner;
 	}
 	//예금주
-	void setBalance(int balance) {
+	public void setBalance(int balance) {
 		this.balance = balance;
 	}
-	int getBalance() {
+	public int getBalance() {
 		return this.balance;
 	}
 	

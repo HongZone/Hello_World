@@ -107,5 +107,5 @@ public class BoardDAO {
 			}
 		}//end of while
 		System.out.println("프로그램 종료");
-	}// end of exe()
+	}// end of exe();
 }
