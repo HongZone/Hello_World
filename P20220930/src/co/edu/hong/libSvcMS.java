@@ -98,6 +98,7 @@ public class libSvcMS {
 		for(int i =0; i <lib.length; i++) {
 			if(lib[i] != null && lib[i].getBookName().equals(Del)) {
 				lib[i] = null;
+				System.out.println("삭제되었습니다");
 				break;
 			}
 		}
