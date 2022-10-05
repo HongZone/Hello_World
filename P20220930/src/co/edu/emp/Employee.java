@@ -89,6 +89,10 @@ public class Employee {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	@Override
+	public String toString() {
+		return "사원리스트 [사번=" + employeeId + ", 이름=" + name + ", 급여=" + salary + "]";
+	}
 	
 	
 }

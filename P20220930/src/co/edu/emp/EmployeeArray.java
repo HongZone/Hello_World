@@ -41,7 +41,15 @@ public class EmployeeArray implements EmployeeService {
 
 	@Override
 	public String search(int employeeId) {
-		return null;
+		//입력된 값중에서 찾도록 list[5] => idx
+		String result = null;
+		for(int i = 0 ; 0 < idx; i++) {
+			if(list[i].getEmployeeId() == employeeId) {
+				result = list[i].getName();
+				break;
+			}
+		}
+		return result;
 	}
 
 	@Override
@@ -52,6 +60,18 @@ public class EmployeeArray implements EmployeeService {
 					list[i].getName(), 
 					list[i].getSalary());
 		}
+	}
+
+	@Override
+	public int searchSal(int employeeId) {
+		int result = -1;
+		for(int i =0; i<idx ; i++) {
+			if(list[i].getEmployeeId() == employeeId) {
+				result = list[i].getSalary();
+				break;
+			}
+		}
+		return result;
 	}
 
 }
