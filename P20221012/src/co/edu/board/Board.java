@@ -16,6 +16,20 @@ public class Board {
 		this.date = date;
 		this.cnt = cnt;
 	}
+	
+	public Board(int num, String title, String content, String writer) {
+		this.num = num;
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+	}
+	public Board(int num, String title, String content, String writer, String date) {
+		this.num = num;
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+		this.date = date;
+	}
 
 	public int getNum() {
 		return num;
