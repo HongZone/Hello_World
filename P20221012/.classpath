@@ -7,6 +7,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Dev/ojdbc6_g.jar"/>
-	<classpathentry kind="lib" path="C:/Dev/javamaile source/javax.mail-api-1.6.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

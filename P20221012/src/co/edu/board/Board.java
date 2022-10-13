@@ -17,11 +17,11 @@ public class Board {
 		this.cnt = cnt;
 	}
 	
-	public Board(int num, String title, String content, String writer) {
+	public Board(int num, String title, String writer, String date) {
 		this.num = num;
 		this.title = title;
-		this.content = content;
 		this.writer = writer;
+		this.date = date;
 	}
 	public Board(int num, String title, String content, String writer, String date) {
 		this.num = num;
@@ -29,6 +29,16 @@ public class Board {
 		this.content = content;
 		this.writer = writer;
 		this.date = date;
+	}
+	public Board(int num, String title, String content) {
+		this.num = num;
+		this.title = title;
+		this.content = content;
+	}
+	public Board(String title, String content) {
+		this.num = num;
+		this.title = title;
+		this.content = content;
 	}
 
 	public int getNum() {
@@ -79,9 +89,18 @@ public class Board {
 		this.cnt = cnt;
 	}
 	
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		return "글번호: "+ num +" 제목: "+title +" 내용: "+content+" 작성자: "+writer+" 작성일시: "+date+" 읽은횟수: "+cnt;
 	}
+	public String sub() {
+		return "글번호: "+ num +" 제목: "+title +" 작성자: "+writer+" 작성일시: "+date;
+	}
+	
+	
 	
 }
