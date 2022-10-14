@@ -14,7 +14,7 @@ public class MemoManager {
 	List<Memo> memoStorage = new ArrayList<>(); //정보담아놓기 위한 컬렉션\
 	File file = new File("C:/Temp/memobook.dat");
 	Scanner scn = new Scanner(System.in);
-
+	
 		//싱글톤
 		private static MemoManager instance = new MemoManager();
 		private MemoManager() {
