@@ -6,6 +6,26 @@ import java.util.List;
 
 public class BoardDAO extends DAO {
 
+	public List<Board> sublist(){
+		//상세보기 불러오기용
+		List<Board> subboadlist= new ArrayList<Board>(); 
+		String sql = "select * from board";
+		conn = getConnect();
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				subboadlist.add(new Board(rs.getInt("board_num")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return subboadlist;
+	}
+	
 	public List<Board> list() {
 		//글목록
 		List<Board> boadlist= new ArrayList<Board>(); 
@@ -16,14 +36,11 @@ public class BoardDAO extends DAO {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while(rs.next()) {
-				boadlist.add(new Board(rs.getInt("board_num"),
-										rs.getString("board_title"),
+				boadlist.add(new Board(String.format("%-15s",rs.getString("board_title")).substring(0,9)+"...",
 										rs.getString("board_writer"),
 										rs.getString("creation_date"),
 										rs.getInt("cnt")));
 			}
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -71,7 +88,7 @@ public class BoardDAO extends DAO {
 			psmt.setString(2, passwd);
 			psmt.setString(3, name);
 			psmt.executeUpdate();
-			System.out.println("회원가입이 완료되었습니다");
+			System.out.println(">>>>회원가입이 완료되었습니다<<<<");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -160,9 +177,13 @@ public class BoardDAO extends DAO {
 	public Board detail(int num) {
 		//글 상세보기
 		Board boad = new Board();
+		String sql1 = "update board set cnt = cnt+1 where board_num = ?";
 		String sql = "select * from board where board_num = ?";
 		conn = getConnect();
 		try {
+			psmt = conn.prepareStatement(sql1);
+			psmt.setInt(1, num);
+			psmt.executeUpdate();
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
 			
@@ -214,14 +235,15 @@ public class BoardDAO extends DAO {
 		
 	}
 	
-	public List<Comment> comlist() {
+	public List<Comment> comlist(int num) {
 		//댓글목록
 		List<Comment> comlist= new ArrayList<Comment>(); 
-		String sql = "select * from comments";
+		String sql = "select * from comments where boardnumm = ? order by boardnumm";
 		conn = getConnect();
 		
 		try {
 			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, num);
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				comlist.add(new Comment(rs.getInt("comment_num"),
@@ -240,16 +262,16 @@ public class BoardDAO extends DAO {
 		return comlist;
 		
 	}
-	public void cominsert(Comment comment) {
+	public void cominsert(String id,String comment, int num) {
 		//댓글쓰기
-		String sql = "insert into comments(comment_num,comment_writer,comment_content)\r\n"
-					+"valus(?,?,?)";
+		String sql = "insert into comments(comment_num,comment_writer,comment_content, boardnumm)\r\n"
+					+"values(seq2.nextval,?,?,?)";
 		conn = getConnect();
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, comment.getCnum());
-			psmt.setString(2, comment.getCwriter());
-			psmt.setString(3, comment.getCcontent());
+			psmt.setString(1, id);
+			psmt.setString(2, comment);
+			psmt.setInt(3, num);
 			
 			psmt.executeUpdate();
 		} catch (SQLException e) {

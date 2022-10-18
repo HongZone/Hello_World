@@ -35,6 +35,15 @@ public class Board {
 		this.content = content;
 		this.writer = writer;
 	}
+	public Board(String title,String writer, String date, int view) {
+		this.title = title;
+		this.writer = writer;
+		this.date = date;
+		this.view = view;
+	}
+	public Board(int num) {
+		this.num = num;
+	}
 	public int getNum() {
 		return num;
 	}
@@ -73,14 +82,22 @@ public class Board {
 	}
 	@Override
 	public String toString() {
-		return num + "  제목:" + title + " 내용:" + content + " 작성자:" + writer + " 작성날짜:"
+		return num + " 제목:" + title + " 내용:" + content + " 작성자:" + writer + " 작성날짜:"
 				+ date + " 조회수:" + view;
 	}
 	
 	public String subString() {
-		return num + "  제목:" + title + " 작성자:" + writer + " 작성날짜:" + date + " 조회수:" + view;
+		return " 제목:" + String.format("%-15s",title) + " 작성자:" + writer + " 작성날짜:" + date + " 조회수:" + view;
 	}
+//	public String subString() {
+//		return String.format("%-5s", " 제목:") + String.format("%-20s", title) + String.format("%3s", " 작성자:") 
+//		+ String.format("%3s",writer) + String.format("%3s"," 작성날짜:") + String.format("%10s",date) + String.format("%3s"," 조회수:") + String.format("%3s",view);
+//	}
 	
+	public String detaileString() {
+		return num + "  제목:" + title + "\n내용:" + content + "\n작성자:" + writer + " 작성날짜:"
+				+ date + " 조회수:" + view;
+	}
 	
 	
 }
