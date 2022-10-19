@@ -16,6 +16,9 @@ public class Comment {
 		this.Ccnt = Ccnt;
 	}
 
+	public Comment(int Cnum) {
+		this.Cnum=Cnum;
+	}
 
 	public int getCnum() {
 		return Cnum;
@@ -49,7 +52,7 @@ public class Comment {
 	}
 	@Override
 	public String toString() {
-		return "글번호:" + Cnum + " 작성자:" + Cwriter + " 내용:" + Ccontent + " 날짜:" + Cdate
+		return " 작성자:" + Cwriter + " 내용:" + Ccontent + " 날짜:" + Cdate
 				+ " 추천수" + Ccnt;
 	}
 	

@@ -29,7 +29,7 @@ public class BoardDAO extends DAO {
 	public List<Board> list() {
 		//글목록
 		List<Board> boadlist= new ArrayList<Board>(); 
-		String sql = "select * from board";
+		String sql = "select * from board order by board_num";
 		conn = getConnect();
 		
 		try {
@@ -40,6 +40,64 @@ public class BoardDAO extends DAO {
 										rs.getString("board_writer"),
 										rs.getString("creation_date"),
 										rs.getInt("cnt")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return boadlist;
+		
+	}
+	
+	public ArrayList listindex(String search) {
+		//글목록 인덱스
+//		int index = 0;
+		ArrayList index = new ArrayList();
+		List<Board> boadlist= new ArrayList<Board>(); 
+		String sql = "select * from board order by board_num";
+		conn = getConnect();
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				boadlist.add(new Board(String.format("%-15s",rs.getString("board_title")).substring(0,9)+"...",
+										rs.getString("board_writer"),
+										rs.getString("creation_date"),
+										rs.getInt("cnt")));
+								}
+				
+				for (int t = 0; t< boadlist.size(); t++) {
+					if(boadlist.get(t).getTitle().contains(search) == true) {
+						index.add(t+1);
+					}
+				}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return index;
+		
+	}
+	
+	public Board listRank() {
+		//글목록랭킹
+//		List<Board> boadlist= new ArrayList<Board>(); 
+		Board boadlist = new Board();
+		String sql = "select * from board where rownum <= 1 order by cnt desc";
+		conn = getConnect();
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				boadlist = new Board(String.format("%-15s",rs.getString("board_title")).substring(0,9)+"...",
+										rs.getString("board_writer"),
+										rs.getString("creation_date"),
+										rs.getInt("cnt"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -151,10 +209,15 @@ public class BoardDAO extends DAO {
 	public int delete(int num, String id) {
 		//글삭제 
 		int a = 0;
+		String sql1 = "delete from comments where boardnumm = ?";
 		String sql = "delete from board where board_num = ? and board_writer = ?";
 		conn = getConnect();
 		
 		try {
+			psmt = conn.prepareStatement(sql1);
+			psmt.setInt(1, num);
+			psmt.executeUpdate();
+			
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
 			psmt.setString(2, id);
@@ -262,6 +325,31 @@ public class BoardDAO extends DAO {
 		return comlist;
 		
 	}
+	
+	public List<Comment> comlist2(int num) {
+		//댓글목록NUM
+		List<Comment> comlist= new ArrayList<Comment>(); 
+		String sql = "select * from comments where boardnumm = ? order by boardnumm";
+		conn = getConnect();
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, num);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				comlist.add(new Comment(rs.getInt("comment_num")));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return comlist;
+		
+	}
+	
 	public void cominsert(String id,String comment, int num) {
 		//댓글쓰기
 		String sql = "insert into comments(comment_num,comment_writer,comment_content, boardnumm)\r\n"
@@ -280,34 +368,80 @@ public class BoardDAO extends DAO {
 			disconnect();
 		}
 	}
-	public void comupdate(String content, int num) {
+	public int comupdate(String content, int num,String id) {
 		//댓글수정
-		String sql = "update comments set comment_content=? where comment_num=?";
+		int a = 0;
+		String sql = "update comments set comment_content=? where comment_num=? and comment_writer=? ";
 		conn = getConnect();
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, content);
 			psmt.setInt(2, num);
-			psmt.executeUpdate();
+			psmt.setString(3, id);
+			int r = psmt.executeUpdate();
+			if(r==1) {
+				a = 1;
+			}else {
+				a = 2;
+			}
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			disconnect();
 		}
+		return a;
 	}
-	public void comdelete(int num) {
+	public int comdelete(int num, String id) {
 		//댓글삭제
-		String sql = "delete from comments where comment_num=?";
+		int a = 0;
+		String sql = "delete from comments where comment_num=? and comment_writer=?";
 		conn = getConnect();
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			psmt.executeUpdate();
+			psmt.setString(2, id);
+			int r = psmt.executeUpdate();
+			if(r==1) {
+				a=1;
+			}else {
+				a=2;
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			disconnect();
 		}
+		return a;
+	}
+	
+	public List<Board> search(String content) {
+		List<Board> boad = new ArrayList();
+		String sql = "select * from board where board_title like '%'||?||'%' order by board_num";
+		conn = getConnect();
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1,content);
+		
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				boad.add(new Board(String.format("%-15s",rs.getString("board_title")).substring(0,9)+"...",
+						rs.getString("board_writer"),
+						rs.getString("creation_date"),
+						rs.getInt("cnt")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return boad;
+		
 	}
 	
 	
