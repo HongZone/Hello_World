@@ -17,6 +17,13 @@ public class Board {
 		this.date = date;
 		this.view = view;
 	}
+	public Board(String title, String content, String writer, String date, int view) {
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+		this.date = date;
+		this.view = view;
+	}
 	public Board(int num, String title, String writer, String date, int view) {
 		this.num = num;
 		this.title = title;
@@ -80,9 +87,10 @@ public class Board {
 	public void setView(int view) {
 		this.view = view;
 	}
+	
 	@Override
 	public String toString() {
-		return num + " 제목:" + title + " 내용:" + content + " 작성자:" + writer + " 작성날짜:"
+		return " 제목:" + title + " 내용:" + content + " 작성자:" + writer + " 작성날짜:"
 				+ date + " 조회수:" + view;
 	}
 	

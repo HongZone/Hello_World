@@ -6,15 +6,14 @@ public class BoardApp {
 	public static void main(String[] args) {
 		BoardDAO dao = new BoardDAO();
 		Board bod = new Board();
-		
-
+		Board bod3 = new Board();
 		Scanner scn = new Scanner(System.in);
 		boolean run = true;
 		int j = 0;
 		int index = 0;
 
 		while (run) {
-			
+
 			// 글목록
 			System.out.println(String.format("%-5s", "Best") + dao.listRank().subString());
 			System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
@@ -35,6 +34,7 @@ public class BoardApp {
 			if (menu == 1) {
 				// 글등록
 				System.out.println(">>>>로그인 후 이용가능합니다<<<<");
+
 			} else if (menu == 2) {
 				// 상세보기
 				System.out.println("상세보기 번호>>");
@@ -43,15 +43,30 @@ public class BoardApp {
 				while (true) {
 					System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 //							System.out.println(dao.detail(detaile2));
-					System.out.println(dao.detail(dao.sublist().get(detaile2 - 1).getNum()));
+					System.out.println(detaile2 + dao.detail(dao.sublist().get(detaile2 - 1).getNum()).toString());
 					System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-					System.out.println("1.수정 2.삭제 3.목록");
+					for (int e = 0; e < dao.comlist(dao.sublist().get(detaile2 - 1).getNum()).size(); e++) {
+						Comment com = dao.comlist(dao.sublist().get(detaile2 - 1).getNum()).get(e);
+						System.out.println(e + 1 + com.toString());
+					}
+					System.out.println("====1.수정 2.삭제 3.목록 4.댓글쓰기 5.댓글수정 6.댓글삭제====");
 					int detailmenu2 = scn.nextInt();
 					scn.nextLine();
 					if (detailmenu2 == 1) {
 						System.out.println(">>>>로그인 후 사용가능합니다<<<<");
 						break;
-					} else {
+					} else if (detailmenu2 == 2) {
+						System.out.println(">>>>로그인 후 사용가능합니다<<<<");
+						break;
+					} else if (detailmenu2 == 3) {
+						break;
+					} else if (detailmenu2 == 4) {
+						System.out.println(">>>>로그인 후 사용가능합니다<<<<");
+						break;
+					} else if (detailmenu2 == 5) {
+						System.out.println(">>>>로그인 후 사용가능합니다<<<<");
+						break;
+					} else if (detailmenu2 == 6) {
 						System.out.println(">>>>로그인 후 사용가능합니다<<<<");
 						break;
 					}
@@ -72,10 +87,11 @@ public class BoardApp {
 					System.out.println(">>>>로그인 되었습니다<<<<");
 
 					while (run) {
+						System.out.println(String.format("%-5s", "Best") + dao.listRank().subString());
 						System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 						for (j = 0; j < dao.list().size(); j++) {
 							bod = dao.list().get(j);
-							System.out.println(j + 1 + bod.subString());
+							System.out.println(String.format("%-5s", j + 1) + bod.subString());
 							System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 						}
 						System.out.println("====0.검색 1.글등록 2.상세보기 3.내가 쓴 글 보기 4.종료====");
@@ -98,7 +114,8 @@ public class BoardApp {
 							while (true) {
 								// 상세글
 								System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-								System.out.println(dao.detail(dao.sublist().get(detaile - 1).getNum()));
+								System.out.println(
+										detaile + dao.detail(dao.sublist().get(detaile - 1).getNum()).toString());
 								System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 								// 댓글목록
 //								for (Comment bod3 : dao.comlist(dao.sublist().get(detaile - 1).getNum())) {
@@ -157,43 +174,207 @@ public class BoardApp {
 										System.out.println(">>>>작성자만 삭제 가능합니다<<<<");
 									}
 
-									}
+								}
 
 							}
 						} else if (submenu == 3) {
 							// 내가 쓴 글 보기
-							for (Board bod2 : dao.mylist(id)) {
-								System.out.println(bod2.subString());
+//							for (Board bod2 : dao.mylist(id)) {
+//								System.out.println(bod2.subString());
+//							}
+							boolean run7 = true;
+							while(run7) {
+							for(int p =0; p<dao.mylist(id).size();p++) {
+								bod3 = dao.mylist(id).get(p);
+								System.out.println(dao.mylistindex(id).get(p) + bod3.subString());
+								System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 							}
-							
+								System.out.println("====1.상세보기 2.목록====");
+								int menu6 = scn.nextInt();
+								scn.nextLine();
+								if (menu6 == 1) {
+									System.out.println("상세보기 번호>>");
+									int detailenum0 = scn.nextInt();
+									scn.nextLine();
+									boolean run4 = true;
+									while (run4) {
+										// 상세글
+										System.out.println(
+												"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+										System.out.println(detailenum0 + dao
+												.detail(dao.sublist().get(detailenum0 - 1).getNum()).toString());
+										System.out.println(
+												"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+										// 댓글번호대로 정렬
+										for (int e = 0; e < dao.comlist(dao.sublist().get(detailenum0 - 1).getNum())
+												.size(); e++) {
+											Comment com = dao.comlist(dao.sublist().get(detailenum0 - 1).getNum())
+													.get(e);
+											System.out.println(e + 1 + com.toString());
+										}
+										System.out.println("====1.수정 2.삭제 3.목록 4.댓글쓰기 5.댓글수정 6.댓글삭제====");
+										int detailmenu = scn.nextInt();
+										scn.nextLine();
+										/* 글수정 */ if (detailmenu == 1) {
+											System.out.println("제목 수정>>");
+											String retitle = scn.nextLine();
+											System.out.println("내용 수정>>");
+											String recontent = scn.nextLine();
+											if (dao.update(dao.sublist().get(detailenum0 - 1).getNum(), retitle,
+													recontent, id) == 1) {
+												System.out.println(">>>>수정되었습니다<<<<");
+											} else {
+												System.out.println(">>>>작성자만 수정할 수 있습니다<<<<");
+											}
+											/* 글삭제 */ } else if (detailmenu == 2) {
+											if (dao.delete(dao.sublist().get(detailenum0 - 1).getNum(), id) == 1) {
+												System.out.println(">>>>삭제되었습니다<<<<");
+												break;
+											} else {
+												System.out.println(">>>>작성자만 삭제할 수 있습니다<<<<");
+											}
 
+											/* 글목록으로 돌아가기 */ } else if (detailmenu == 3) {
+											run7 = false;
+											run4 = false;
+											/* 댓글쓰기 */ } else if (detailmenu == 4) {
+											System.out.println("댓글 내용>>");
+											String comment = scn.nextLine();
+											dao.cominsert(id, comment, dao.sublist().get(detailenum0 - 1).getNum());
+											/* 댓글수정 */ } else if (detailmenu == 5) {
+											System.out.println("수정할 댓글번호>>");
+											int comnum = scn.nextInt();
+											scn.nextLine();
+											System.out.println("수정할 내용>>");
+											String comcon = scn.nextLine();
+											// dao.comupdate(comcon, comnum);
+											if (dao.comupdate(comcon,
+													dao.comlist2(dao.sublist().get(detailenum0 - 1).getNum())
+															.get(comnum - 1).getCnum(),
+													id) != 1) {
+												System.out.println(">>>>작성자가 아닙니다<<<<");
+											}
+
+											/* 댓글삭제 */ } else if (detailmenu == 6) {
+											System.out.println("삭제할 댓글번호>>");
+											int comnum2 = scn.nextInt();
+											scn.nextLine();
+											if (dao.comdelete(comnum2, id) != 1) {
+												System.out.println(">>>>작성자만 삭제 가능합니다<<<<");
+											}
+
+										}
+
+									}
+
+								} else if (menu6 == 2) {
+									break;
+								}
+
+							}
+						
+/////////////////////////////////////
 						} else if (submenu == 4) {
 							// 종료
 							run = false;
-							
-							
+							System.out.println("종료되었습니다");
+
 						} else if (submenu == 0) {
+							// 검색
 							boolean run3 = true;
 							while (run3) {
 								System.out.println("검색>>");
 								String contentSearch = scn.nextLine();
 //								for (Board bod2 : dao.search(contentSearch)) {
 //									System.out.println(dao.listindex(contentSearch).get(index++) + bod2.subString());
-								for(int o = 0; o<dao.search(contentSearch).size();o++) {
-									System.out.println(dao.listindex(contentSearch).get(o) + dao.search(contentSearch).get(o).subString());
-									
+								for (int o = 0; o < dao.search(contentSearch).size(); o++) {
+									System.out.println(dao.listindex(contentSearch).get(o)
+											+ dao.search(contentSearch).get(o).subString());
+
 									System.out.println("====1.상세보기 2.목록====");
-									int menu3 = scn.nextInt();scn.nextLine();
-									if(menu3 == 1) {
+									int menu3 = scn.nextInt();
+									scn.nextLine();
+									if (menu3 == 1) {
 										System.out.println("상세보기 번호>>");
-										String detailenum = scn.nextLine();
-										
-									}else if(menu3 == 2){
+										int detailenum = scn.nextInt();
+										scn.nextLine();
+										boolean run4 = true;
+										while (run4) {
+											// 상세글
+											System.out.println(
+													"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+											System.out.println(detailenum + dao
+													.detail(dao.sublist().get(detailenum - 1).getNum()).toString());
+											System.out.println(
+													"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+											// 댓글번호대로 정렬
+											for (int e = 0; e < dao.comlist(dao.sublist().get(detailenum - 1).getNum())
+													.size(); e++) {
+												Comment com = dao.comlist(dao.sublist().get(detailenum - 1).getNum())
+														.get(e);
+												System.out.println(e + 1 + com.toString());
+											}
+											System.out.println("====1.수정 2.삭제 3.목록 4.댓글쓰기 5.댓글수정 6.댓글삭제====");
+											int detailmenu = scn.nextInt();
+											scn.nextLine();
+											/* 글수정 */ if (detailmenu == 1) {
+												System.out.println("제목 수정>>");
+												String retitle = scn.nextLine();
+												System.out.println("내용 수정>>");
+												String recontent = scn.nextLine();
+												if (dao.update(dao.sublist().get(detailenum - 1).getNum(), retitle,
+														recontent, id) == 1) {
+													System.out.println(">>>>수정되었습니다<<<<");
+												} else {
+													System.out.println(">>>>작성자만 수정할 수 있습니다<<<<");
+												}
+												/* 글삭제 */ } else if (detailmenu == 2) {
+												if (dao.delete(dao.sublist().get(detailenum - 1).getNum(), id) == 1) {
+													System.out.println(">>>>삭제되었습니다<<<<");
+													break;
+												} else {
+													System.out.println(">>>>작성자만 삭제할 수 있습니다<<<<");
+												}
+
+												/* 글목록으로 돌아가기 */ } else if (detailmenu == 3) {
+												run3 = false;
+												run4 = false;
+												/* 댓글쓰기 */ } else if (detailmenu == 4) {
+												System.out.println("댓글 내용>>");
+												String comment = scn.nextLine();
+												dao.cominsert(id, comment, dao.sublist().get(detailenum - 1).getNum());
+												/* 댓글수정 */ } else if (detailmenu == 5) {
+												System.out.println("수정할 댓글번호>>");
+												int comnum = scn.nextInt();
+												scn.nextLine();
+												System.out.println("수정할 내용>>");
+												String comcon = scn.nextLine();
+												// dao.comupdate(comcon, comnum);
+												if (dao.comupdate(comcon,
+														dao.comlist2(dao.sublist().get(detailenum - 1).getNum())
+																.get(comnum - 1).getCnum(),
+														id) != 1) {
+													System.out.println(">>>>작성자가 아닙니다<<<<");
+												}
+
+												/* 댓글삭제 */ } else if (detailmenu == 6) {
+												System.out.println("삭제할 댓글번호>>");
+												int comnum2 = scn.nextInt();
+												scn.nextLine();
+												if (dao.comdelete(comnum2, id) != 1) {
+													System.out.println(">>>>작성자만 삭제 가능합니다<<<<");
+												}
+
+											}
+
+										}
+
+									} else if (menu3 == 2) {
 										run3 = false;
 									}
-								
+
+								}
 							}
-						}
 						}
 					} // end of while
 				} else {
@@ -211,24 +392,69 @@ public class BoardApp {
 				dao.memberShip(id, pw, name);
 
 				/* 검색 */ } else if (menu == 0) {
-					boolean run1 = true;
-					while (run1) {
-						System.out.println("검색>>");
-						String contentSearch = scn.nextLine();
+				boolean run1 = true;
+				while (run1) {
+					System.out.println("검색>>");
+					String contentSearch = scn.nextLine();
 //						for (Board bod2 : dao.search(contentSearch)) {
 //							System.out.println(dao.listindex(contentSearch).get(index++) + bod2.subString());
-						for(int o = 0; o<dao.search(contentSearch).size();o++) {
-							System.out.println(dao.listindex(contentSearch).get(o) + dao.search(contentSearch).get(o).subString());
-							
-							System.out.println("====1.상세보기 2.목록====");
-							int menu3 = scn.nextInt();scn.nextLine();
-							if(menu3 == 1) {
-								System.out.println(">>>>로그인 후 이용가능<<<<");
-								run1 = false;
-							}else if(menu3 == 2){
-								run1 = false;
+					for (int o = 0; o < dao.search(contentSearch).size(); o++) {
+						System.out.println(
+								dao.listindex(contentSearch).get(o) + dao.search(contentSearch).get(o).subString());
+
+						System.out.println("====1.상세보기 2.목록====");
+						int menu5 = scn.nextInt();
+						scn.nextLine();
+						if (menu5 == 1) {
+							System.out.println("상세보기 번호>>");
+							int detailenum = scn.nextInt();
+							scn.nextLine();
+							boolean run5 = true;
+							while (run5) {
+								// 상세글
+								System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+								System.out.println(
+										detailenum + dao.detail(dao.sublist().get(detailenum - 1).getNum()).toString());
+								System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+								// 댓글번호대로 정렬
+								for (int e = 0; e < dao.comlist(dao.sublist().get(detailenum - 1).getNum())
+										.size(); e++) {
+									Comment com = dao.comlist(dao.sublist().get(detailenum - 1).getNum()).get(e);
+									System.out.println(e + 1 + com.toString());
+								}
+								System.out.println("====1.수정 2.삭제 3.목록 4.댓글쓰기 5.댓글수정 6.댓글삭제====");
+								int detailmenu2 = scn.nextInt();
+								scn.nextLine();
+								/* 글수정 */ if (detailmenu2 == 1) {
+									System.out.println(">>>>로그인 후 이용가능<<<<");
+									break;
+									/* 글삭제 */ } else if (detailmenu2 == 2) {
+
+									System.out.println(">>>>로그인 후 이용가능<<<<");
+									break;
+
+									/* 글목록으로 돌아가기 */ } else if (detailmenu2 == 3) {
+									run5 = false;
+									/* 댓글쓰기 */ } else if (detailmenu2 == 4) {
+									System.out.println(">>>>로그인 후 이용가능<<<<");
+									break;
+									/* 댓글수정 */ } else if (detailmenu2 == 5) {
+									System.out.println(">>>>로그인 후 이용가능<<<<");
+									break;
+
+									/* 댓글삭제 */ } else if (detailmenu2 == 6) {
+									System.out.println(">>>>로그인 후 이용가능<<<<");
+									break;
+
+								}
+
 							}
-						
+							run1 = false;
+						} else if (menu5 == 2) {
+							run1 = false;
+							break;
+						}
+
 					}
 				}
 			}
