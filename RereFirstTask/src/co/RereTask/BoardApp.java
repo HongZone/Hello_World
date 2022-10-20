@@ -1,6 +1,7 @@
 package co.RereTask;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class BoardApp {
@@ -414,6 +415,11 @@ public class BoardApp {
 
 			} else if (menu == 6) {
 // 회원가입		
+				Random random = new Random();
+				random.setSeed(System.currentTimeMillis());
+				
+				
+				String randomNum = Integer.toString(random.nextInt(100));
 				MailApp mailApp = new MailApp();
 				System.out.println("아이디를 입력해주세요>>");
 				String id = scn.nextLine();
@@ -423,11 +429,11 @@ public class BoardApp {
 				String name = scn.nextLine();
 				System.out.println("메일을 입력해주세요>>");
 				String email = scn.nextLine();
-				mailApp.sendMail("ghdtlr1233@naver.com", email, "인증", "64");
+				mailApp.sendMail("ghdtlr1233@naver.com", email, "인증", randomNum);
 				while(true) {
 				System.out.println("메일 확인 후 인증번호를 입력해주세요");
 				String check = scn.nextLine();
-				if(check.equals("64")) {
+				if(check.equals(randomNum)) {
 					dao.memberShip(id, pw, name, email);
 					break;
 					}
