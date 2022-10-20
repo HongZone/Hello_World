@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
-import co.Page.Board2;
-import co.Page.PageDAO;
-
 public class BoardDAO extends DAO {
 	
 	public void pageList() {
@@ -198,9 +195,9 @@ public class BoardDAO extends DAO {
 
 	}
 
-	public void memberShip(String id, String passwd, String name) {
+	public void memberShip(String id, String passwd, String name, String email) {
 		// 회원가입
-		String sql = "insert into users(id, passwd,user_name) values(?,?,?)";
+		String sql = "insert into users(id, passwd,user_name,email) values(?,?,?,?)";
 		conn = getConnect();
 
 		try {
@@ -208,6 +205,7 @@ public class BoardDAO extends DAO {
 			psmt.setString(1, id);
 			psmt.setString(2, passwd);
 			psmt.setString(3, name);
+			psmt.setString(4, email);
 			psmt.executeUpdate();
 			System.out.println(">>>>회원가입이 완료되었습니다<<<<");
 

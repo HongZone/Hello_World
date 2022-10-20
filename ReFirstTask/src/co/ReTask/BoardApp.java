@@ -13,8 +13,8 @@ public class BoardApp {
 		int j = 0;
 		int index = 0;
 		int pageNum=1, from=0, to=0;
+		List<Board> sublist = dao.sublist();
 		while (run) {
-
 // 첫화면글목록
 			List<Board> list = dao.list();
 			int totalCnt = list.size();
@@ -48,10 +48,10 @@ public class BoardApp {
 				scn.nextLine();
 				while (true) {
 					System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-					System.out.println(detaile2 + dao.detail(dao.sublist().get(detaile2 - 1).getNum()).toString());
+					System.out.println(detaile2 + dao.detail(sublist.get(detaile2 - 1).getNum()).toString());
 					System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-					for (int e = 0; e < dao.comlist(dao.sublist().get(detaile2 - 1).getNum()).size(); e++) {
-						Comment com = dao.comlist(dao.sublist().get(detaile2 - 1).getNum()).get(e);
+					for (int e = 0; e < dao.comlist(sublist.get(detaile2 - 1).getNum()).size(); e++) {
+						Comment com = dao.comlist(sublist.get(detaile2 - 1).getNum()).get(e);
 						System.out.println(e + 1 + com.toString());
 					}
 					System.out.println("====1.수정 2.삭제 3.목록 4.댓글쓰기 5.댓글수정 6.댓글삭제====");
@@ -92,14 +92,17 @@ public class BoardApp {
 					System.out.println(">>>>로그인 되었습니다<<<<");
 
 					while (run) {
+						list = dao.list();
+						totalCnt = list.size();
+						totalPage =(int) Math.ceil(totalCnt/5.0);
 						from = (pageNum-1)*5; // 0
 						to = (pageNum*5)-1; // 4
 						System.out.println(String.format("%-5s", "Best") + dao.listRank().subString());
 						System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-						for (j = 0; j < totalCnt; j++) {
-							if(j >= from && j <= to) {
-							bod = list.get(j);
-							System.out.println(String.format("%-5s", j + 1) + bod.subString());
+						for (int y = 0; y < totalCnt; y++) {
+							if(y >= from && y <= to) {
+							bod = list.get(y);
+							System.out.println(String.format("%-5s", y + 1) + bod.subString());
 							}
 						}
 						System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"+pageNum+"/"+totalPage+"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
@@ -115,7 +118,7 @@ public class BoardApp {
 							String content = scn.nextLine();
 							Board boad = new Board(title, content, id);
 							dao.insert(boad);
-
+							continue;
 						} else if (submenu == 2) {
 // 로그인 후 상세보기
 							System.out.println("상세보기 번호>>");
@@ -124,12 +127,12 @@ public class BoardApp {
 							while (true) {
 								System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 								System.out.println(
-										detaile + dao.detail(dao.sublist().get(detaile - 1).getNum()).toString());
+										detaile + dao.detail(sublist.get(detaile - 1).getNum()).toString());
 								System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 //댓글목록
 //댓글번호대로 정렬
-								for (int e = 0; e < dao.comlist(dao.sublist().get(detaile - 1).getNum()).size(); e++) {
-									Comment com = dao.comlist(dao.sublist().get(detaile - 1).getNum()).get(e);
+								for (int e = 0; e < dao.comlist(sublist.get(detaile - 1).getNum()).size(); e++) {
+									Comment com = dao.comlist(sublist.get(detaile - 1).getNum()).get(e);
 									System.out.println(e + 1 + com.toString());
 								}
 								System.out.println("====1.수정 2.삭제 3.목록 4.댓글쓰기 5.댓글수정 6.댓글삭제====");
@@ -141,7 +144,7 @@ public class BoardApp {
 									String retitle = scn.nextLine();
 									System.out.println("내용 수정>>");
 									String recontent = scn.nextLine();
-									if (dao.update(dao.sublist().get(detaile - 1).getNum(), retitle, recontent,
+									if (dao.update(sublist.get(detaile - 1).getNum(), retitle, recontent,
 											id) == 1) {
 										System.out.println(">>>>수정되었습니다<<<<");
 									} else {
@@ -149,7 +152,7 @@ public class BoardApp {
 									}
 								} else if (detailmenu == 2) {
 //상세글 삭제
-									if (dao.delete(dao.sublist().get(detaile - 1).getNum(), id) == 1) {
+									if (dao.delete(sublist.get(detaile - 1).getNum(), id) == 1) {
 										System.out.println(">>>>삭제되었습니다<<<<");
 										break;
 									} else {
@@ -163,7 +166,7 @@ public class BoardApp {
 //댓글쓰기
 									System.out.println("댓글 내용>>");
 									String comment = scn.nextLine();
-									dao.cominsert(id, comment, dao.sublist().get(detaile - 1).getNum());
+									dao.cominsert(id, comment, sublist.get(detaile - 1).getNum());
 								} else if (detailmenu == 5) {
 //댓글수정
 									System.out.println("수정할 댓글번호>>");
@@ -172,7 +175,7 @@ public class BoardApp {
 									System.out.println("수정할 내용>>");
 									String comcon = scn.nextLine();
 									// dao.comupdate(comcon, comnum);
-									if (dao.comupdate(comcon, dao.comlist2(dao.sublist().get(detaile - 1).getNum())
+									if (dao.comupdate(comcon, dao.comlist2(sublist.get(detaile - 1).getNum())
 											.get(comnum - 1).getCnum(), id) != 1) {
 										System.out.println(">>>>작성자가 아닙니다<<<<");
 									}
@@ -212,13 +215,13 @@ public class BoardApp {
 										System.out
 												.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 										System.out.println(detailenum0
-												+ dao.detail(dao.sublist().get(detailenum0 - 1).getNum()).toString());
+												+ dao.detail(sublist.get(detailenum0 - 1).getNum()).toString());
 										System.out
 												.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 										// 댓글번호대로 정렬
-										for (int e = 0; e < dao.comlist(dao.sublist().get(detailenum0 - 1).getNum())
+										for (int e = 0; e < dao.comlist(sublist.get(detailenum0 - 1).getNum())
 												.size(); e++) {
-											Comment com = dao.comlist(dao.sublist().get(detailenum0 - 1).getNum())
+											Comment com = dao.comlist(sublist.get(detailenum0 - 1).getNum())
 													.get(e);
 											System.out.println(e + 1 + com.toString());
 										}
@@ -231,7 +234,7 @@ public class BoardApp {
 											String retitle = scn.nextLine();
 											System.out.println("내용 수정>>");
 											String recontent = scn.nextLine();
-											if (dao.update(dao.sublist().get(detailenum0 - 1).getNum(), retitle,
+											if (dao.update(sublist.get(detailenum0 - 1).getNum(), retitle,
 													recontent, id) == 1) {
 												System.out.println(">>>>수정되었습니다<<<<");
 											} else {
@@ -239,7 +242,7 @@ public class BoardApp {
 											}
 										} else if (detailmenu == 2) {
 //내가 쓴 글에서 글삭제
-											if (dao.delete(dao.sublist().get(detailenum0 - 1).getNum(), id) == 1) {
+											if (dao.delete(sublist.get(detailenum0 - 1).getNum(), id) == 1) {
 												System.out.println(">>>>삭제되었습니다<<<<");
 												break;
 											} else {
@@ -254,7 +257,7 @@ public class BoardApp {
 //내가 쓴 글에서 댓글쓰기
 											System.out.println("댓글 내용>>");
 											String comment = scn.nextLine();
-											dao.cominsert(id, comment, dao.sublist().get(detailenum0 - 1).getNum());
+											dao.cominsert(id, comment, sublist.get(detailenum0 - 1).getNum());
 										} else if (detailmenu == 5) {
 //내가 쓴 글에서 댓글수정
 											System.out.println("수정할 댓글번호>>");
@@ -263,7 +266,7 @@ public class BoardApp {
 											System.out.println("수정할 내용>>");
 											String comcon = scn.nextLine();
 											if (dao.comupdate(comcon,
-													dao.comlist2(dao.sublist().get(detailenum0 - 1).getNum())
+													dao.comlist2(sublist.get(detailenum0 - 1).getNum())
 															.get(comnum - 1).getCnum(),
 													id) != 1) {
 												System.out.println(">>>>작성자가 아닙니다<<<<");
@@ -317,13 +320,13 @@ public class BoardApp {
 											System.out.println(
 													"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 											System.out.println(detailenum + dao
-													.detail(dao.sublist().get(detailenum - 1).getNum()).toString());
+													.detail(sublist.get(detailenum - 1).getNum()).toString());
 											System.out.println(
 													"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 											// 댓글번호대로 정렬
-											for (int e = 0; e < dao.comlist(dao.sublist().get(detailenum - 1).getNum())
+											for (int e = 0; e < dao.comlist(sublist.get(detailenum - 1).getNum())
 													.size(); e++) {
-												Comment com = dao.comlist(dao.sublist().get(detailenum - 1).getNum())
+												Comment com = dao.comlist(sublist.get(detailenum - 1).getNum())
 														.get(e);
 												System.out.println(e + 1 + com.toString());
 											}
@@ -336,7 +339,7 @@ public class BoardApp {
 												String retitle = scn.nextLine();
 												System.out.println("내용 수정>>");
 												String recontent = scn.nextLine();
-												if (dao.update(dao.sublist().get(detailenum - 1).getNum(), retitle,
+												if (dao.update(sublist.get(detailenum - 1).getNum(), retitle,
 														recontent, id) == 1) {
 													System.out.println(">>>>수정되었습니다<<<<");
 												} else {
@@ -344,7 +347,7 @@ public class BoardApp {
 												}
 											} else if (detailmenu == 2) {
 // 로그인 후 검색에서 상세글 삭제
-												if (dao.delete(dao.sublist().get(detailenum - 1).getNum(), id) == 1) {
+												if (dao.delete(sublist.get(detailenum - 1).getNum(), id) == 1) {
 													System.out.println(">>>>삭제되었습니다<<<<");
 													break;
 												} else {
@@ -359,7 +362,7 @@ public class BoardApp {
 // 로그인 후 검색에서 상세글 댓글쓰기
 												System.out.println("댓글 내용>>");
 												String comment = scn.nextLine();
-												dao.cominsert(id, comment, dao.sublist().get(detailenum - 1).getNum());
+												dao.cominsert(id, comment, sublist.get(detailenum - 1).getNum());
 											} else if (detailmenu == 5) {
 // 로그인 후 검색에서 상세글 댓글수정
 												System.out.println("수정할 댓글번호>>");
@@ -368,7 +371,7 @@ public class BoardApp {
 												System.out.println("수정할 내용>>");
 												String comcon = scn.nextLine();
 												if (dao.comupdate(comcon,
-														dao.comlist2(dao.sublist().get(detailenum - 1).getNum())
+														dao.comlist2(sublist.get(detailenum - 1).getNum())
 																.get(comnum - 1).getCnum(),
 														id) != 1) {
 													System.out.println(">>>>작성자가 아닙니다<<<<");
@@ -410,14 +413,21 @@ public class BoardApp {
 				}
 
 			} else if (menu == 6) {
-// 회원가입
+// 회원가입		
+				
 				System.out.println("아이디를 입력해주세요>>");
 				String id = scn.nextLine();
 				System.out.println("비밀번호를 입력해주세요>>");
 				String pw = scn.nextLine();
 				System.out.println("이름을 입력해주세요>>");
 				String name = scn.nextLine();
-				dao.memberShip(id, pw, name);
+				System.out.println("메일을 입력해주세요>>");
+				String email = scn.nextLine();
+				
+				
+					dao.memberShip(id, pw, name, email);
+					
+				
 
 			} else if (menu == 0) {
 //로그인 전 검색
@@ -441,12 +451,12 @@ public class BoardApp {
 // 로그인 전 상세글
 								System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 								System.out.println(
-										detailenum + dao.detail(dao.sublist().get(detailenum - 1).getNum()).toString());
+										detailenum + dao.detail(sublist.get(detailenum - 1).getNum()).toString());
 								System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 // 댓글번호대로 정렬
-								for (int e = 0; e < dao.comlist(dao.sublist().get(detailenum - 1).getNum())
+								for (int e = 0; e < dao.comlist(sublist.get(detailenum - 1).getNum())
 										.size(); e++) {
-									Comment com = dao.comlist(dao.sublist().get(detailenum - 1).getNum()).get(e);
+									Comment com = dao.comlist(sublist.get(detailenum - 1).getNum()).get(e);
 									System.out.println(e + 1 + com.toString());
 								}
 								System.out.println("====1.수정 2.삭제 3.목록 4.댓글쓰기 5.댓글수정 6.댓글삭제====");
