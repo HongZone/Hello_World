@@ -2,10 +2,48 @@ package co.ReTask;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Scanner;
+
+import co.Page.Board2;
+import co.Page.PageDAO;
 
 public class BoardDAO extends DAO {
-
+	
+	public void pageList() {
+		//페이징 목록
+		Scanner scn = new Scanner(System.in);
+		Queue<Board> queue = new LinkedList<>();
+		
+		
+		for(int i=0; i<list().size();i++) {
+			queue.add(list().get(i));
+		}
+		
+		for(int j =0; j<(double) list().size()/3;j++) {
+			for(int a=0 ; a<5; a++) {
+				if(queue.peek() == null) {
+					break;
+				}
+				System.out.println(queue.poll()); 
+			}
+			System.out.println("====="+(j+1)+"/"+(int)Math.ceil((double)list().size()/3)+"=====");
+			
+				System.out.println("1.다음");
+				int paging = scn.nextInt();
+				if(paging != 1) {
+					break;
+			} else if(paging == 1){
+				if(queue.peek() == null) {
+					System.out.println("마지막 페이지입니다");
+				}
+			}
+		}
+	}
+	
+	
 	public List<Board> sublist() {
 		// 상세보기 불러오기용
 		List<Board> subboadlist = new ArrayList<Board>();
