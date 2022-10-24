@@ -8,5 +8,19 @@
 	<h3>안녕하세요 홍식의 홈입니다</h3>
 	<hr>
 	<a href="member/memberAdd.html">회원등록 페이지 이동</a>
+	
+	<a href="./first.do?job=SA_MAN">get방식 호출</a> <!--a링크로 호출하는건 다 get방식-->
+	<form action ="./first.do" method="post"> 
+	사원번호: <input type = "number" name+"emp_id"><br>
+	이름: <input type="text" name="Last_name"><br>
+	이메일: <input type="email" name="email"><br>
+	직무: <select name="job">
+			<option value="PROG">개발 </option>
+			<option value="SA_REP">랩퍼</option>
+			<option value="ST_CLERK">Stock Clerk</option>
+		</select>
+	입사일자: <input type="date" name="hire_date"><br>
+	<input type="submit" value="post방식호출">
+	</form>
 </body>
 </html>

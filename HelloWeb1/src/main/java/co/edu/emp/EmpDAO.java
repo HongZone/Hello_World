@@ -113,12 +113,12 @@ public class EmpDAO extends DAO {
 		List<EmployeeVO> empList = new ArrayList<EmployeeVO>();
 		getConnect();
 		String sql = "select * from empl "
-				+"  where employee_id = decode(? , 0 , employee_id, ?)" //
-				+" and first_name like '%'||?||'%' " //
-				+" and last_name like '%'||?||'%' " //
-				+" and email like '%'||?||'%'" //
-				+" and to_char(hire_date, 'yyyy-mm-dd') like '%'||?||'%'" //
-				+" and job_id = nvl(?, job_id)" //
+				+"  where nvl(employee_id,0) = decode(? , 0 , nvl(employee_id,0), ?)" 
+				+" and first_name like '%'||?||'%' " 
+				+" and last_name like '%'||?||'%' " 
+				+" and email like '%'||?||'%'" 
+				+" and to_char(hire_date, 'yyyy-mm-dd') like '%'||?||'%'" 
+				+" and job_id = nvl(?, job_id)" 
 				+ "order by employee_id";
 		
 		try {
