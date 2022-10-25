@@ -11,4 +11,6 @@ public interface MemberService {
 	public void removeMember(String id); //삭제
 	public MemberVO findMember(String id); //한건조회
 	public List<MemberVO> memberList(); //전체목록
+	
+	public MemberVO login(String id, String passwd); //로그인 처리
 }

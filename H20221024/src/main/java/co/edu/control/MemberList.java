@@ -1,6 +1,7 @@
 package co.edu.control;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,30 +13,17 @@ import co.edu.service.MemberService;
 import co.edu.service.MemberServiceImpl;
 import co.edu.vo.MemberVO;
 
-public class MemberModify implements Command {
+public class MemberList implements Command {
 
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		//사용자 입력정보를 parameter을 통해 읽어와야한다
-		
-		
-		String id = req.getParameter("id");
-		String pw = req.getParameter("passwd");
-		String nm = req.getParameter("name");
-		String ml = req.getParameter("email");
-		
-		MemberVO vo = new MemberVO(id, pw, nm, ml);
-		
-		
-		
-		
-		
 		MemberService service = new MemberServiceImpl();
-		service.medifyMember(vo);
+		List<MemberVO> list = service.memberList();
 		
-		HttpUtil.forward(req, resp, "memberResult/memberUpdateOutput.jsp");
+		req.setAttribute("memberList", list);
 		
+		HttpUtil.forward(req, resp, "memberResult/memberList.jsp");
 	}
 
 }
